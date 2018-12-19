@@ -80,7 +80,7 @@ PATH_TO_LABELS = os.path.join(CWD_PATH,'data','mscoco_label_map.pbtxt')
 # Number of classes the object detector can identify
 NUM_CLASSES = 90
 
-## Load the label map.
+# Load the label map.
 # Label maps map indices to category names, so that when the convolution
 # network predicts `5`, we know that this corresponds to `airplane`.
 # Here we use internal utility functions, but anything that returns a
@@ -99,7 +99,6 @@ with detection_graph.as_default():
         tf.import_graph_def(od_graph_def, name='')
 
     sess = tf.Session(graph=detection_graph)
-
 
 # Define input and output tensors (i.e. data) for the object detection classifier
 
@@ -173,8 +172,11 @@ def pet_detector(frame):
         min_score_thresh=0.40)
 
     # Draw boxes defining "outside" and "inside" locations.
+    # OUTSIDE
     cv2.rectangle(frame,TL_outside,BR_outside,(255,20,20),3)
     cv2.putText(frame,"Outside box",(TL_outside[0]+10,TL_outside[1]-10),font,1,(255,20,255),3,cv2.LINE_AA)
+    
+    # INSIDE
     cv2.rectangle(frame,TL_inside,BR_inside,(20,20,255),3)
     cv2.putText(frame,"Inside box",(TL_inside[0]+10,TL_inside[1]-10),font,1,(20,255,255),3,cv2.LINE_AA)
     
